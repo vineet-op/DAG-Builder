@@ -9,6 +9,8 @@ A modern, interactive Directed Acyclic Graph (DAG) visualizer built with React, 
 - **Drag & Drop Interface**: Intuitive node positioning and connection management
 - **Visual Feedback**: Clear status indicators and selection highlighting
 - **Keyboard Shortcuts**: Delete key to remove selected nodes and edges
+- **Auto Layout**: Instantly arrange nodes vertically or horizontally
+- **Clear Canvas**: Remove all nodes and edges with one click
 - **Modern UI**: Beautiful gradient design with dark mode support
 - **Responsive Controls**: Mini-map and zoom controls for better navigation
 
@@ -75,6 +77,8 @@ bun dev
 - **Zoom**: Use mouse wheel or the zoom controls
 - **Mini-map**: Use the mini-map for quick navigation
 - **Fit View**: Use the fit view button to see all nodes
+- **Auto Layout**: Use the "Auto Layout Vertical" or "Auto Layout Horizontal" buttons to automatically arrange nodes
+- **Clear Canvas**: Use the "Clear Canvas" button to remove all nodes and edges
 
 ## 🔍 DAG Validation
 
