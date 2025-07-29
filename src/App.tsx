@@ -169,6 +169,11 @@ export default function App() {
     ));
   }
 
+  const clearCanvas = () => {
+    setNodes([])
+    setEdges([])
+  }
+
   useEffect(() => {
     const handleDelete = (event: KeyboardEvent) => {
       if (event.key === 'Delete') {
@@ -192,30 +197,37 @@ export default function App() {
 
 
   return (
-    <div className="h-screen bg-gradient-to-br from-gray-900 to-black  relative overflow-y-auto">
+    <div className="h-screen bg-gradient-to-br  from-gray-900 to-black  relative overflow-y-auto">
       <Toaster
         position="top-right"
         richColors
         closeButton
       />
-      <div className='bg-gradient-to-br from-black-900 p-5 flex justify-center items-center gap-10 rounded-xl shadow-xl border border-gray-700/50 mb-4 absolute inset-x-0 '>
+      <div className='bg-gradient-to-br z-99 mt-5 w-full from-black-900 p-3 sm:p-5 flex  sm:flex-row justify-center items-center gap-4 sm:gap-10 rounded-lg shadow-xl border overflow-hidden border-gray-700/50 mb-4 absolute inset-x-0  sm:w-4xl mx-auto'>
         <Button
           onClick={addNode}
-          className='bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg transition-colors duration-300 ease-in-out transform hover:scale-105 shadow-md'
+          className='w-30 sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 sm:px-6 py-2 rounded-lg transition-ease-in-out transform hover:scale-105 shadow-md cursor-pointer duration-500'
         >
           Add Node
         </Button>
         <Button
           onClick={deleteNode}
-          className='bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-2 rounded-lg transition-colors duration-300 ease-in-out transform hover:scale-105 shadow-md'
+          className='w-30 sm:w-auto bg-red-600 hover:bg-red-700 text-white font-semibold px-4 sm:px-6 py-2 rounded-lg transition-ease-in-out transform hover:scale-105 shadow-md cursor-pointer duration-500'
         >
           Delete Node
         </Button>
-      </div>
 
-      {/* DAG Status */}
-      <div className="absolute top-24 left-4 bg-gradient-to-br from-blue-100/90 to-blue-200/90 dark:from-gray-800/90 dark:to-gray-900/90 backdrop-blur-md border border-blue-200 dark:border-gray-700 px-6 py-3 rounded-xl shadow-2xl z-10 text-md font-extrabold text-blue-900 dark:text-blue-100 transition-all duration-300 hover:scale-105 transform">
-        {dagStatus}
+        <Button
+          onClick={clearCanvas}
+          className='w-30 sm:w-auto bg-pink-600 hover:bg-pink-700 text-white font-semibold px-4 sm:px-6 py-2 rounded-lg transition-ease-in-out transform hover:scale-105 shadow-md cursor-pointer duration-500'
+        >
+          Clear Canvas
+        </Button>
+
+        {/* DAG Status */}
+        <div className="bg-neutral-300 lg:w-fit sm:px-4 p-2  font-normal text-lg  rounded-2xl">
+          <span>{dagStatus}</span>
+        </div>
       </div>
 
       <ReactFlow
