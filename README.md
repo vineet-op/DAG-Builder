@@ -2,6 +2,12 @@
 
 A modern, interactive Directed Acyclic Graph (DAG) visualizer built with React, TypeScript, and Vite. This application allows users to create, manipulate, and validate directed acyclic graphs through an intuitive drag-and-drop interface.
 
+# Demo
+
+https://github.com/user-attachments/assets/d40a8459-255e-4c5e-8bb1-5e2c0429d698
+
+
+
 ## 🚀 Features
 
 - **Interactive Graph Creation**: Add and delete nodes with custom labels
