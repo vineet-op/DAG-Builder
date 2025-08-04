@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { ReactFlow, applyNodeChanges, applyEdgeChanges, addEdge, Background, MiniMap, Controls, type Edge, type Node, useReactFlow } from '@xyflow/react';
+import { ReactFlow, applyNodeChanges, applyEdgeChanges, addEdge, Background, MiniMap, Controls, type Edge, type Node, useReactFlow, MarkerType } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import CustomNode from '../CustomNode/CustomNode';
 import { Button } from '../ui/button';
@@ -84,10 +84,30 @@ export default function FlowWrapper() {
         setTimeout(() => fitView({ padding: 0.2, duration: 300 }), 0);
     }, [nodes, edges, fitView]);
 
+    const validateNodes = (nodes: any[]) => {
+        if (!nodes.every(node => node.id && node.type && node.position && node.targetPosition
+            && node.sourcePosition && node.data)) {
+            console.warn('Invalid node: missing required properties');
+            setDagStatus('❌ Invalid DAG: Missing required properties');
+            return false;
+        }
+        setDagStatus('✅ DAG is Valid');
+        return true;
+    }
+
+
 
 
     const checkForCycles = (edges: any[]) => {
+
+
+
         const adj: Record<string, string[]> = {};
+
+        console.log("Edges", edges);
+
+
+
         edges.forEach((edge) => {
             if (!adj[edge.source]) adj[edge.source] = [];
             adj[edge.source].push(edge.target);
@@ -95,6 +115,8 @@ export default function FlowWrapper() {
 
         const visited: Set<string> = new Set();
         const recStack: Set<string> = new Set();
+
+
 
         const dfs = (node: string): boolean => {
             if (recStack.has(node)) return true; // cycle found
@@ -119,7 +141,11 @@ export default function FlowWrapper() {
 
     const validateDAG = (edges: any[]) => {
         const hasCycle = checkForCycles(edges);
-        setDagStatus(hasCycle ? '❌ Invalid DAG: Cycle detected' : '✅ DAG is valid');
+        const checkNodeforCycle = validateNodes(nodes);
+
+        setDagStatus(hasCycle ? '❌ Invalid DAG: Cycle detected' : checkNodeforCycle ? '❌ Invalid DAG: Missing required properties' : '✅ DAG is valid');
+
+        console.log("Dag Status", dagStatus);
     };
 
 
@@ -187,6 +213,8 @@ export default function FlowWrapper() {
 
     const addNode = () => {
 
+
+
         const label = prompt("Enter node name:");
         if (!label) return;
 
@@ -199,6 +227,8 @@ export default function FlowWrapper() {
         };
 
         setNodes((nds) => [...nds, newNode]);
+        setDagStatus('❌ Invalid DAG: New node is not connected');
+
     };
 
     const nodeTypes = { customNode: CustomNode };
@@ -294,6 +324,12 @@ export default function FlowWrapper() {
                 defaultEdgeOptions={{
                     style: { strokeWidth: 2, stroke: "#64748b" },
                     type: "simplebezier",
+                    markerEnd: {
+                        type: MarkerType.ArrowClosed,
+                        width: 20,
+                        height: 20,
+                        color: "#64748b",
+                    },
                 }}
                 fitView
                 className="bg-gray-100 dark:bg-gray-900 rounded-2xl overflow-hidden shadow-2xl"
